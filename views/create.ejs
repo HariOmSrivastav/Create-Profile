@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create profile</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 20px;
+        }
+        form {
+          margin-bottom: 20px;
+        }
+        input {
+          margin: 5px;
+          padding: 8px;
+          width: 200px;
+        }
+        button {
+          padding: 8px 12px;
+        }
+        ul {
+          list-style-type: none;
+          padding: 0;
+        }
+        li {
+          margin: 10px 0;
+        }
+        #p{
+          margin-left: 69vw;
+        }
+        #c{
+          padding : 2px 2px 2px 2px;
+          border: 2px solid grey;
+          border-radius: 5px;
+        }
+      </style>
+</head>
+<body>
+    <h1>Create New Profile</h1>
+    <form id="profileForm" action="/add-profile" method="post">
+        <input type="text" name="Name" id="Name" placeholder="Name" required/>
+        <input type="number" name="Contact_Number" id="Contact_Number" placeholder="Contact_Number" required/>
+        <input type="email" name="Email" id="Email" placeholder="Email" required/>
+        <button type="submit">Add Profile</button>
+    </form>
+    <h2>Saved Profiles</h2>
+    <ul>
+        <%profiles1.forEach(profile => {%>
+            <li id="c">
+                <strong><%= profile.Name %></strong> - <%= profile.Email%> - <%= profile.Contact_Number%>
+                <form id="p" action="/update/<%= profile._id%>" method="post" style="display:inline" >
+                  <button type="button" onclick="editProfile('<%=profile._id%>','<%=profile.Name%>','<%=profile.Contact_Number%>','<%=profile.Email%>')">Edit</button>
+                </form>
+                <form action="/delete/<%=profile._id%>" method="post" style="display: inline">
+                  <button type="submit">Delete</button>
+                </form>
+            </li>
+        <%});%>
+    </ul>
+    <script>
+      function editProfile(id , name , contact , email){
+        document.getElementById('profileForm').action = `/update/${id}`
+        document.getElementById('Name').value = name ;
+        document.getElementById('Contact_Number').value = contact ;
+        document.getElementById('Email').value = email ;
+      }
+    </script>
+</body>
+</html>
