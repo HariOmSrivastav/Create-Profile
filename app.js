@@ -17,7 +17,7 @@ mongoose.connect(mongoURI)
   .catch(err => {
     console.error('MongoDB connection error:', err);
   });
-// Useing middleware to parse the data of input that while post request data is accessed without error , used 
+// Using middleware to parse the data of input that while post request data is accessed without error , used 
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use('/' , profileRoutes)
