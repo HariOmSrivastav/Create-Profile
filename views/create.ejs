@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Profile</title>
     <style>
-        /* Global Styles */
+        /* Basic Reset */
         * {
             margin: 0;
             padding: 0;
@@ -13,127 +13,108 @@
             font-family: Arial, sans-serif;
         }
 
+        /* Centered Layout */
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: blanchedalmond;
             padding: 20px;
+            background-color: #f9f9f9;
             color: #333;
         }
 
         h1, h2 {
-            color: #007bff;
-            margin: 10px 0;
+            margin-bottom: 15px;
+            color: #0056b3;
         }
 
         /* Form Styles */
         form {
-            display: flex;
-            flex-direction: column;
             width: 100%;
-            max-width: 500px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            background: #ffffff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             margin-bottom: 20px;
         }
 
         input[type="text"],
         input[type="number"],
         input[type="email"] {
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
             width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
         button {
             padding: 10px;
+            width: 100%;
             border: none;
             border-radius: 4px;
-            cursor: pointer;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        button[type="submit"] {
-            background-color: #007bff;
-        }
-
-        button[type="submit"]:hover {
             background-color: #0056b3;
+            color: #fff;
+            cursor: pointer;
         }
 
-        /* Profile List Styles */
+        button:hover {
+            background-color: #004080;
+        }
+
+        /* Profiles List Styles */
         ul {
-            list-style: none;
             width: 100%;
-            max-width: 500px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            list-style-type: none;
+            padding: 0;
         }
 
         li {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            font-size: 16px;
-            display: flex;
-            flex-direction: column;
-            background-color: #f9f9f9;
-            border-radius: 5px;
+            background: #ffffff;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             margin-bottom: 10px;
         }
 
-        li:last-child {
-            border-bottom: none;
+        li span {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
         }
 
-        .profile-details {
-            margin-left: 10px;
-            color: #555;
-        }
-
-        /* Button Styling */
         .profile-buttons {
             display: flex;
             gap: 10px;
             margin-top: 10px;
         }
 
-        .profile-buttons form {
-            display: inline;
+        .profile-buttons button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
-        /* Edit and Delete Button Styles */
         .profile-buttons button[type="button"] {
-            background-color: #343a40; /* Dark color for Edit */
+            background-color: #ffc107;
+            color: #333;
         }
 
         .profile-buttons button[type="button"]:hover {
-            background-color: #23272b;
+            background-color: #e0a800;
         }
 
         .profile-buttons button[type="submit"] {
-            background-color: #dc3545; /* Red color for Delete */
+            background-color: #dc3545;
+            color: #fff;
         }
 
         .profile-buttons button[type="submit"]:hover {
             background-color: #c82333;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 500px) {
-            body, form, ul {
-                width: 100%;
-                padding: 10px;
-            }
         }
     </style>
 </head>
@@ -145,24 +126,26 @@
         <input type="email" name="Email" id="Email" placeholder="Email" required />
         <button type="submit">Add Profile</button>
     </form>
+
     <h2>Saved Profiles</h2>
     <ul>
         <% profiles1.forEach(profile => { %>
-            <li id="c">
+            <li>
                 <span><strong><%= profile.Name %></strong></span>
-                <span class="profile-details">Email: <%= profile.Email %></span>
-                <span class="profile-details">Contact Number: <%= profile.Contact_Number %></span>
+                <span>Email: <%= profile.Email %></span>
+                <span>Contact Number: <%= profile.Contact_Number %></span>
                 <div class="profile-buttons">
-                    <form action="/update/<%= profile._id %>" method="post">
+                    <form action="/update/<%= profile._id %>" method="post" style="display: inline;">
                         <button type="button" onclick="editProfile('<%= profile._id %>', '<%= profile.Name %>', '<%= profile.Contact_Number %>', '<%= profile.Email %>')">Edit</button>
                     </form>
-                    <form action="/delete/<%= profile._id %>" method="post">
+                    <form action="/delete/<%= profile._id %>" method="post" style="display: inline;">
                         <button type="submit">Delete</button>
                     </form>
                 </div>
             </li>
         <% }) %>
     </ul>
+
     <script>
         function editProfile(id, name, contact, email) {
             document.getElementById('profileForm').action = `/update/${id}`;
